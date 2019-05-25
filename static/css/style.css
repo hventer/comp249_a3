@@ -8,29 +8,35 @@ body {
 
 /*all images*/
 img {
-    width: 70%;
+    width: 500px;
     height: auto;
 }
 
 .content {
-    width: 80%;
-    margin: auto;
+    margin-left: 5%;
+    margin-right: 5%;
     margin-bottom: 0;
     background-color: pink;
-    padding: 20px;
+    padding: 0px;
 }
 
-.header {
-    font-family: cursive, sans-serif;
+header {
+    background: rgba(60, 60, 60, .45);
     text-align: center;
-    background-color: #ffcc33;
-    margin: 0;
-    padding: 10px;
-    height: 80px;
+    height: auto;
+    list-style-type: none;
+    font-family: cursive, sans-serif;
+    padding: 1px;
 }
 
-.header h1 {
-    font-size: 15px;
+header.cart {
+    color: blueviolet;
+}
+
+header h2 {
+    font-size: 25px;
+    padding: 0;
+    margin: 0;
 }
 
 .footer {
@@ -40,6 +46,45 @@ img {
     margin: 0;
     padding: 10px;
     height: 80px;
+}
+
+#products {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.item {
+    width: 500px;
+    display: inline-block;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.item .info {
+    color: blue;
+}
+
+
+
+th {
+    cursor: pointer;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+}
+
+.product {
+    text-decoration: underline;
+}
+
+.product:hover {
+    color: white;
+    cursor: pointer;
 }
 
 .content {

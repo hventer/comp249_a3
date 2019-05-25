@@ -9,32 +9,33 @@
 
         // set up handler for dataChanged event from model
         $(window).on("dataChanged", function() {
-            var products = window.app.model.getProducts()
-            var cart = window.app.model.getCart()
+            const products = window.app.model.getProducts()
+            const cart = window.app.model.getCart()
 
-            var sum = 0
-            for (var i = 0; i < cart.length; i++) {
+            let sum = 0
+            for (let i = 0; i < cart.length; i++) {
                 sum += cart[i].cost
             }
             $(".header").html("<h1>The WT</h1" +
-                "<ul><li><h2>Your Cart: "+cart.length+" items, $"+sum+"</h2></li>" +
+                "<ul><li><h2 class='cart'>Your Cart: "+cart.length+" items, $"+sum+"</h2></li>" +
                 "<li><button class='cart'>Show Cart</button></li></ul>")
 
 
+            //$("#products").append("<tr><th onclick="+sortTable(0)+">Product</th><th onclick="+sortTable(1)+">Cost</th></tr>")
             $("#products").append("<tr><th>Product</th><th>Cost</th></tr>")
-            for (var i = 0; i < products.length; i++) {
+            for (let i = 0; i < products.length; i++) {
                 $("#products").append("<tr><td><a class='product' data-product=" + products[i].id + ">" + products[i].name + "</a>" +
                     "<td>$" + products[i].unit_cost + "</td></tr>")
             }
 
 
             $(".product").click(function () {
-                var id = parseInt(this.dataset.product)
-                var data = window.app.model.getDetails(id)
+                let id = parseInt(this.dataset.product)
+                let data = window.app.model.getDetails(id)
 
                 // //check if this item is in the cart
-                var updateVal = 0
-                for(var i=0; i<cart.length; i++) {
+                let updateVal = 0
+                for(let i=0; i<cart.length; i++) {
                     if (cart[i].id === id) {
                         updateVal = 1
                     }
@@ -64,9 +65,9 @@
 
 
             $(".cart").click(function () {
-                var sum = 0
+                let sum = 0
                 $(".item").html("")
-                for (var i = 0; i < cart.length; i++) {
+                for (let i = 0; i < cart.length; i++) {
                     sum+=cart[i].cost
                     $(".item").append("<div class='info'>" + cart[i].name + "</div>" +
                         "<div class='info'>" + cart[i].quantity + "</div>" +
@@ -74,6 +75,63 @@
                         "<div class='info'>Total: $"+sum+"</div>")
                 }
             })
+
+
+            // function sortTable(n) {
+            //     console.log("I've been started " + n)
+            //     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            //     table = document.getElementById("products");
+            //     switching = true;
+            //     // Set the sorting direction to ascending:
+            //     dir = "asc";
+            //     /* Make a loop that will continue until
+            //     no switching has been done: */
+            //     while (switching) {
+            //         // Start by saying: no switching is done:
+            //         switching = false;
+            //         rows = table.rows;
+            //         /* Loop through all table rows (except the
+            //         first, which contains table headers): */
+            //         for (i = 1; i < (rows.length - 1); i++) {
+            //             // Start by saying there should be no switching:
+            //             shouldSwitch = false;
+            //             /* Get the two elements you want to compare,
+            //             one from current row and one from the next: */
+            //             x = rows[i].getElementsByTagName("TD")[n];
+            //             y = rows[i + 1].getElementsByTagName("TD")[n];
+            //             /* Check if the two rows should switch place,
+            //             based on the direction, asc or desc: */
+            //             if (dir == "asc") {
+            //                 if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            //                     // If so, mark as a switch and break the loop:
+            //                     shouldSwitch = true;
+            //                     break;
+            //                 }
+            //             } else if (dir == "desc") {
+            //                 if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            //                     // If so, mark as a switch and break the loop:
+            //                     shouldSwitch = true;
+            //                     break;
+            //                 }
+            //             }
+            //         }
+            //         if (shouldSwitch) {
+            //             /* If a switch has been marked, make the switch
+            //             and mark that a switch has been done: */
+            //             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            //             switching = true;
+            //             // Each time a switch is done, increase this count by 1:
+            //             switchcount++;
+            //         } else {
+            //             /* If no switching has been done AND the direction is "asc",
+            //             set the direction to "desc" and run the while loop again. */
+            //             if (switchcount == 0 && dir == "asc") {
+            //                 dir = "desc";
+            //                 switching = true;
+            //             }
+            //         }
+            //     }
+            // }
         })
     })
 })()
