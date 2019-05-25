@@ -5,75 +5,47 @@
 
         // make a model instance and trigger data load
         window.app.model = new window.app.WT()
-        window.app.model.getData()
+        window.app.model.getProductData()
+        window.app.model.getCartData()
 
         // set up handler for dataChanged event from model
-        $(window).on("dataChanged", function() {
+        $(window).on("productDataChanged", function() {
+            console.log("1")
             const products = window.app.model.getProducts()
-            const cart = window.app.model.getCart()
+            console.log("2")
 
-            let sum = 0
-            for (let i = 0; i < cart.length; i++) {
-                sum += cart[i].cost
-            }
-            $(".header").html("<h1>The WT</h1" +
-                "<ul><li><h2 class='cart'>Your Cart: "+cart.length+" items, $"+sum+"</h2></li>" +
-                "<li><button class='cart'>Show Cart</button></li></ul>")
-
-
-            //$("#products").append("<tr><th onclick="+sortTable(0)+">Product</th><th onclick="+sortTable(1)+">Cost</th></tr>")
-            $("#products").append("<tr><th>Product</th><th>Cost</th></tr>")
-            for (let i = 0; i < products.length; i++) {
-                $("#products").append("<tr><td><a class='product' data-product=" + products[i].id + ">" + products[i].name + "</a>" +
-                    "<td>$" + products[i].unit_cost + "</td></tr>")
-            }
+            let template = Handlebars.compile($("#productstemplate").html())
+            let context = template({products: products})
+            $('#products').html(context)
 
 
             $(".product").click(function () {
                 let id = parseInt(this.dataset.product)
-                let data = window.app.model.getDetails(id)
-
-                // //check if this item is in the cart
-                let updateVal = 0
-                for(let i=0; i<cart.length; i++) {
-                    if (cart[i].id === id) {
-                        updateVal = 1
-                    }
-                }
+                let data = window.app.model.getDetailsID(id)
 
                 //the html for this specific product
-                $(".item").html("<button class='close'>Close</button><h2>" + data.name + "</h2>" +
-                    "<div><img src=" + data.image_url + "></div>" +
-                    "<div class='info'>" + data.inventory + " in stock</div>" +
-                    "<div class='info'>$" + data.unit_cost + "</div>" +
-                    "<div class='info'>" + data.description + "</div>" +
-
-                    //the add to cart function
-                    "<form action='/cart' method='post'>" +
-                    "Quantity: <input type='number' name='quantity' value='1'>" +
-                    "<input type='submit' value='Add to Cart'>" +
-                    "<input type='hidden' name='update' value=" + updateVal + ">" +
-                    "<input type='hidden' name='productid' value=" + id + "></form>")
-
+                template = Handlebars.compile($("#itemtemplate").html())
+                context = template({name: data.name,
+                                        image_url: data.image_url,
+                                        inventory: data.inventory,
+                                        unit_cost: data.unit_cost,
+                                        description: data.description,
+                                        id: id})
+                $('.item').html(context)
 
                 $(".close").click(function () {
-                    console.log("Ive been clicked")
                     $(".item").html("")
                 })
-            })
 
+                $("#cartform").submit(function(event) {
+                    let input = $(this).children("input[name='quantity']")
+                    var quant = $(input).val()
+                    input = $(this).children("input[name='productid']")
+                    var id = $(input).val()
 
-
-            $(".cart").click(function () {
-                let sum = 0
-                $(".item").html("")
-                for (let i = 0; i < cart.length; i++) {
-                    sum+=cart[i].cost
-                    $(".item").append("<div class='info'>" + cart[i].name + "</div>" +
-                        "<div class='info'>" + cart[i].quantity + "</div>" +
-                        "<div class='info'>$" + cart[i].cost + "</div>" +
-                        "<div class='info'>Total: $"+sum+"</div>")
-                }
+                    window.app.model.setCart(id, quant)
+                    event.preventDefault()
+                })
             })
 
 
@@ -132,6 +104,35 @@
             //         }
             //     }
             // }
+        })
+
+        $(window).on("cartDataChanged", function () {
+            const cart = window.app.model.getCart()
+
+            let sum = 0
+            for (let i = 0; i < cart.length; i++) {
+                sum += cart[i].cost
+            }
+            let template = Handlebars.compile($("#carttemplate").html())
+            let context = template({length: cart.length, sum: sum})
+            $('.header').html(context)
+
+            $(".cart").click(function () {
+                $(".item").html("")
+                template = Handlebars.compile($("#cartlisttemplate").html())
+                context = template({cart: cart, sum: sum})
+                $('.item').html(context)
+
+                $("#modcartform").submit(function(event) {
+                    let input = $(this).children("input[name='quantity']")
+                    var quant = $(input).val()
+                    input = $(this).children("input[name='productid']")
+                    var id = $(input).val()
+
+                    window.app.model.setCart(id, quant)
+                    event.preventDefault()
+                })
+            })
         })
     })
 })()

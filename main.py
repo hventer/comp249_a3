@@ -50,7 +50,7 @@ def add_to_cart(db):
     update = request.forms.get('update')
     session.update_cart(db, productid, quantity, update=='1')
 
-    return redirect('/')
+    return redirect('/cart')
 
 
 

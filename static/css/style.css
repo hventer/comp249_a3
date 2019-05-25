@@ -24,13 +24,14 @@ header {
     background: rgba(60, 60, 60, .45);
     text-align: center;
     height: auto;
-    list-style-type: none;
     font-family: cursive, sans-serif;
     padding: 1px;
 }
 
-header.cart {
+.header #carttemplate {
     color: blueviolet;
+    list-style-type: none;
+
 }
 
 header h2 {
@@ -60,6 +61,7 @@ header h2 {
     display: inline-block;
     margin-left: 0;
     padding-left: 0;
+    border: black;
 }
 
 .item .info {

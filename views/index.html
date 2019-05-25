@@ -7,21 +7,81 @@
 </head>
 <body>
 
-    <header class="header"></header>
+    <header class=header></header>
 
 
     <div class="content">
 
-        <table id="products"></table>
+        <div id="products"></div>
 
         <div class="item">
 
         </div>
-
-
-
-
     </div>
+
+    <script id="carttemplate" type="x-handlebars-template">
+        <h1>The WT</h1>
+        <ul>
+            <li><h2 class="cart">Your Cart: {{length}} items, ${{sum}}</h2></li>
+            <li><button class="cart">Show Cart</button></li>
+        </ul>
+    </script>
+
+    <script id="productstemplate" type="x-handlebars-template">
+    <table>
+        <thead>
+            <tr><th>Product</th><th>Cost</th></tr>
+        </thead>
+        <tbody>
+        {{#each products}}
+            <tr>
+                <td><a class="product" data-product={{id}}>{{name}}</a></td>
+                <td>${{unit_cost}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    </script>
+
+    <script id="itemtemplate" type="x-handlebars-template">
+        <button class="close">Close</button>
+        <h2>{{name}}</h2>
+        <div><img src={{image_url}}></div>
+        <div class="info">{{inventory}} in stock</div>
+        <div class="info">${{unit_cost}}</div>
+        <div class="info">{{description}}</div>
+
+        <form id="cartform">
+            Quantity: <input type="number" name="quantity" value="1">
+            <input type="submit" value="Add to Cart">
+            <input type="hidden" name="productid" value={{id}}>
+        </form>
+    </script>
+
+    <script id="cartlisttemplate" type="x-handlebars-template">
+    <table>
+        <thead>
+            <tr><th>Name</th><th>Cost</th><th>Quantity</th></tr>
+        </thead>
+        <tbody>
+        {{#each cart}}
+        <tr>
+            <td class="info">{{name}}</td>
+            <td class="info">${{cost}}</td>
+            <td class="info"> <form id="modcartform">
+            <input type="number" name="quantity" value={{quantity}}>
+            <input type="submit" value="Update Cart">
+            <input type="hidden" name="productid" value={{id}}>
+            </form></td>
+        </tr>
+        {{/each}}
+
+
+        <tr><td class="info">Total: ${{sum}}</td></tr>
+        </tbody>
+    </table>
+     </script>
+
 
     <footer class="footer">
         <p>Copyright &copy; 2019 COMP249 Web Technology</p>
