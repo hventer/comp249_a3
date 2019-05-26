@@ -11,7 +11,7 @@
         this.cart = []
     }
 
-    /* get data from the API endpoint and store it locally */
+    /* get product data from the API endpoint and store it locally */
     WT.prototype.getProductData = function() {
 
         var self = this
@@ -27,6 +27,7 @@
         })
     }
 
+    /* get product data from the API endpoint and store it locally */
     WT.prototype.getCartData = function() {
 
         var self = this
@@ -36,30 +37,22 @@
            success: function(data) {
                 /* store data as a property of this object */
                 self.cart = data
-               //console.log("getData")
                /* trigger the data changed event */
                 window.dispatchEvent(cartDataChangedEvent)
            }
         })
     }
 
-    WT.prototype.setCart = function(id, quant) {
+    /* add to/updating the cart */
+    WT.prototype.setCart = function(id, quant, updateVal) {
 
         var self = this
 
-        //check if this item is in the cart
-        let updateVal = 0
-         for(let i=0; i<self.cart.length; i++) {
-             if (self.cart[i].id === id) {
-                 updateVal = 1
-             }
-         }
-
-         console.log(quant)
-
+        /* make a post request to '/cart' */
         $.post({
             url: self.urlcart,
 
+            /* give the data required by the POST in main.py */
             data: {
                 'productid': id,
                 'quantity': quant,
@@ -67,15 +60,16 @@
             },
 
            success: function(data) {
-               //console.log("post succeeded")
+                /* get the updated cart data from the POSTs redirect to GET '/cart' */
                self.cart = data
+
                 /* trigger the data changed event */
                 window.dispatchEvent(cartDataChangedEvent)
            }
         })
     }
 
-    /* return the list of films */
+    /* return the list of products */
     WT.prototype.getProducts = function() {
         if (this.products === []) {
             return []
@@ -84,6 +78,7 @@
         }
     }
 
+    /* get a specific product when given an id */
     WT.prototype.getDetailsID = function(id) {
         let results = this.getProducts()
 
@@ -94,11 +89,11 @@
         }
     }
 
+    /* return the list of the cart */
     WT.prototype.getCart = function() {
         if (this.cart === []) {
             return []
         } else {
-            //console.log("getCart")
             return this.cart.cart
         }
     }

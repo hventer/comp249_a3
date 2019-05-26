@@ -1,52 +1,59 @@
 html {
-    background-color: ghostwhite;
+    background: rgb(30,30,30);
+    color: white;
 }
 
 body {
     margin: 0;
 }
 
-/*all images*/
-img {
-    width: 500px;
-    height: auto;
-}
-
 .content {
+    font-family: "Helvetica";
     margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 0;
-    background-color: pink;
     padding: 0px;
+    height: 700px;
 }
 
 header {
-    background: rgba(60, 60, 60, .45);
+    background: rgb(60, 60, 60);
     text-align: center;
     height: auto;
     font-family: cursive, sans-serif;
-    padding: 1px;
+    height: 80px;
 }
 
-.header #carttemplate {
-    color: blueviolet;
-    list-style-type: none;
+header h1 {
+    font-size: 45px;
+    color: white;
+    margin-top: 10px;
+    margin-left: 15px;
+    float: left;
+}
 
+header ul {
+    margin-top: 15px;
+    margin-right: 15px;
+    padding: 0;
+    list-style-type: none;
+    float: right;
 }
 
 header h2 {
-    font-size: 25px;
+    font-family: "Helvetica";
+    font-size: 20px;
     padding: 0;
     margin: 0;
 }
 
-.footer {
-    font-family: cursive, sans-serif;
+footer {
+    background: rgb(60, 60, 60);
     text-align: center;
-    background-color: #ffcc33;
-    margin: 0;
+    font-family: "Helvetica";
     padding: 10px;
-    height: 80px;
+    margin: 0;
+    height: 60px;
 }
 
 #products {
@@ -57,18 +64,55 @@ header h2 {
 }
 
 .item {
-    width: 500px;
     display: inline-block;
-    margin-left: 0;
-    padding-left: 0;
-    border: black;
+    width: 650px;
+    margin-top: 15px;
+    margin-right: 10%;
+    padding: 0;
 }
 
 .item .info {
-    color: blue;
+    color: whitesmoke;
 }
 
+/*all images*/
+img {
+    width: 650px;
+    height: auto;
+}
 
+.close {
+    border-radius: 3px;
+    border: 1px solid white;
+}
+.close:hover {
+    background-color: grey;
+    color: white;
+}
+
+.cart {
+    border-radius: 3px;
+    border: 1px solid white;
+}
+.cart:hover {
+    background-color: grey;
+    color: white;
+}
+
+.addcart {
+    border-radius: 3px;
+    border: 1px solid white;
+}
+.addcart:hover {
+    background-color: grey;
+    color: white;
+}
+
+.quantity {
+    border-radius: 3px;
+    border: 1px solid white;
+    width: 35px;
+}
 
 th {
     cursor: pointer;
@@ -76,16 +120,16 @@ th {
 
 th, td {
     border-bottom: 1px solid #ddd;
-    padding: 5px;
+    padding: 6px;
     text-align: left;
 }
 
 .product {
-    text-decoration: underline;
+
 }
 
 .product:hover {
-    color: white;
+    color: darkgray;
     cursor: pointer;
 }
 
