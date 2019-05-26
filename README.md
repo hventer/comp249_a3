@@ -23,8 +23,17 @@ Besides that, I have `index.html` which contains all the necessary templates for
   
 which is where everthing that can be seen on the HTML page is placed. The templates are used to fill out these `<div>`'s and the CSS edits the id's and classes.
 
+For the update cart, when an item is added to cart using the "Add To Cart" button below the product, it is sent to the server as an `update=0` POST request.
+When the cart is updated after the "Show Cart" button has been pushed (i.e. update cart while showing cart), it is sent to the server as an `update=1` POST request. Meaning that the cart is updated and entering 0 will remove the item from the list.
+In my HTML, I set `min="0"` to prevent anyone from submitting negative numbers.
 
-I'll admit I am having some trouble with modifying the cart when the cart list is displayed. I have been able to add items to the cart, however the updated cart is not displayed unless "View Cart" is clicked again. I know that the new cart should be dispalyed inside the function `$("#modcartform").submit(function(event)`. However, when doing this, it causes quite a few other issues.
+For sorting, I searched many different places to try and help me decide which method to use. It tried using methods similar to this post on Stackoverflow: `https://stackoverflow.com/questions/3160277/jquery-table-sort`, however I could not get it working.
+My thinking was to run through and use selectionSort to do the work.
+I found an article (`https://www.w3schools.com/howto/howto_js_sort_table.asp`) which had an example of a table sorting algorithm. As such, I modified their code to fit my web application. After changes to my HTML and the algorithm, I got it working. Now, when clicking on either the Product or the Cost heading, it will sort ascending on the first click, and descending on the second click.
+
+
+I could make this README more verbose, however I figure since my code has plenty of columns, I would keep this README short and simple.
+
 
 The only files which I changed/added are:
   * `script.js`: modified

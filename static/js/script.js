@@ -19,7 +19,6 @@
             let context = template({products: products})
             $('#products').html(context)
 
-            //$(".ProdTableHead").click(console.log("ive been clicked"))
 
             //when a product is clicked on, display its details to the right.
             $(".product").click(function () {
@@ -40,6 +39,7 @@
                                         id: id})
                 $('.item').html(context)
 
+                //remove the HTML tags from the description
                 $('<p>').replaceWith("")
                 $('</p>').replaceWith("")
 
@@ -65,64 +65,77 @@
                 })
             })
 
-            // function sortTable(n) {
-            //     console.log(n)
-            //     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-            //     table = document.getElementById("productstable");
-            //     switching = true;
-            //     // Set the sorting direction to ascending:
-            //     dir = "asc";
-            //     /* Make a loop that will continue until
-            //     no switching has been done: */
-            //     while (switching) {
-            //         // Start by saying: no switching is done:
-            //         switching = false;
-            //         rows = table.rows;
-            //         console.log(rows)
-            //         /* Loop through all table rows (except the
-            //         first, which contains table headers): */
-            //         for (i = 1; i < (rows.length - 1); i++) {
-            //             // Start by saying there should be no switching:
-            //             shouldSwitch = false;
-            //             /* Get the two elements you want to compare,
-            //             one from current row and one from the next: */
-            //             x = rows[i].getElementsByTagName("TD")[n];
-            //             y = rows[i + 1].getElementsByTagName("TD")[n];
-            //             /* Check if the two rows should switch place,
-            //             based on the direction, asc or desc: */
-            //             if (dir == "asc") {
-            //                 if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            //                     // If so, mark as a switch and break the loop:
-            //                     shouldSwitch = true;
-            //                     break;
-            //                 }
-            //             } else if (dir == "desc") {
-            //                 if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            //                     // If so, mark as a switch and break the loop:
-            //                     shouldSwitch = true;
-            //                     break;
-            //                 }
-            //             }
-            //         }
-            //         if (shouldSwitch) {
-            //             /* If a switch has been marked, make the switch
-            //             and mark that a switch has been done: */
-            //             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            //             switching = true;
-            //             // Each time a switch is done, increase this count by 1:
-            //             switchcount++;
-            //         } else {
-            //             /* If no switching has been done AND the direction is "asc",
-            //             set the direction to "desc" and run the while loop again. */
-            //             if (switchcount == 0 && dir == "asc") {
-            //                 dir = "desc";
-            //                 switching = true;
-            //             }
-            //         }
-            //     }
-            // }
-            //
-            // $("#CostTableHead").click(sortTable(1))
+            /*
+             This function was found from: https://www.w3schools.com/howto/howto_js_sort_table.asp
+             NOTE: The bulk of this function is not my own work
+
+             I have taken their function and adapted it to work as my own, in this web app.
+             */
+            function sortTable(n) {
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                table = document.getElementById("productstable");
+                switching = true;
+                // Set the sorting direction to ascending:
+                dir = "asc";
+                /* Make a loop that will continue until
+                no switching has been done: */
+                while (switching) {
+                    // Start by saying: no switching is done:
+                    switching = false;
+                    rows = table.rows;
+                    /* Loop through all table rows (except the
+                    first, which contains table headers): */
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        // Start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /* Get the two elements you want to compare,
+                        one from current row and one from the next: */
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+                        /* Check if the two rows should switch place,
+                        based on the direction, asc or desc: */
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                // If so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                // If so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /* If a switch has been marked, make the switch
+                        and mark that a switch has been done: */
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        // Each time a switch is done, increase this count by 1:
+                        switchcount++;
+                    } else {
+                        /* If no switching has been done AND the direction is "asc",
+                        set the direction to "desc" and run the while loop again. */
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+
+            //when the Product heading has been click, run sortTable with n=0 since this is the first column
+            $("#ProdTableHead").click(function () {
+                sortTable(0)
+            })
+
+            //when the Cost heading has been click, run sortTable with n=1 since this is the second column
+            $("#CostTableHead").click(function () {
+                sortTable(1)
+            })
+
         })
 
         // set up handler for cartDataChanged event from model

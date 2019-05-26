@@ -28,12 +28,12 @@
     <script id="productstemplate" type="x-handlebars-template">
     <table id="productstable">
         <thead>
-        <tr><th><a class="ProdTableHead" data-product={{id}}>Product</a></th><th><a id="CostTableHead">Cost</a></th></tr>
+        <tr><th id="ProdTableHead">Product</th><th id="CostTableHead">Cost</th></tr>
         </thead>
         <tbody>
         {{#each products}}
             <tr>
-                <td><a class="product" data-product={{id}}>{{name}}</a></td>
+                <td class="product" data-product={{id}}>{{name}}</td>
                 <td>${{unit_cost}}</td>
             </tr>
         {{/each}}
@@ -50,7 +50,7 @@
         <div class="info">{{inventory}} in stock</div>
 
         <form id="cartform">
-            Quantity: <input class="quantity" type="number" name="quantity" value="1">
+            Quantity: <input class="quantity" type="number" min="0" name="quantity" value="1">
             <input class="addcart" type="submit" value="Add to Cart">
             <input type="hidden" name="productid" value={{id}}>
         </form>
@@ -67,7 +67,7 @@
             <td class="info">{{name}}</td>
             <td class="info">${{cost}}</td>
             <td class="info"> <form class="modcartform">
-            <input class="quantity" type="number" name="quantity" value={{quantity}}>
+            <input class="quantity" type="number" min="0" name="quantity" value={{quantity}}>
             <input class="addcart" type="submit" value="Update & Close Cart">
             <input type="hidden" name="productid" value={{id}}>
             </form></td>
